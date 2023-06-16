@@ -1,0 +1,186 @@
+Feature,"Test 
+ Percentage",Metric,Value
+Fjob,10%,"Shap
+ Value",0.012322449159198801
+Fjob,30%,"Shap
+ Value",0.01282591108839485
+Fjob,50%,"Shap
+ Value",0.01371802527783756
+Fjob,70%,"Shap
+ Value",0.0133157047127521
+Medu,10%,"Shap
+ Value",0.3378231646351374
+Medu,30%,"Shap
+ Value",0.32759709371548085
+Medu,50%,"Shap
+ Value",0.33169499542207315
+Medu,70%,"Shap
+ Value",0.3252639191839416
+Pstatus,10%,"Shap
+ Value",0.04612973331242916
+Pstatus,30%,"Shap
+ Value",0.04688528897051085
+Pstatus,50%,"Shap
+ Value",0.046560368769300746
+Pstatus,70%,"Shap
+ Value",0.047060364865753726
+Walc,10%,"Shap
+ Value",0.19836147036439672
+Walc,30%,"Shap
+ Value",0.1909547359284959
+Walc,50%,"Shap
+ Value",0.18464384664717484
+Walc,70%,"Shap
+ Value",0.1867939957184506
+absences,10%,"Shap
+ Value",0.08459621377848209
+absences,30%,"Shap
+ Value",0.09517867481749949
+absences,50%,"Shap
+ Value",0.08993009595463931
+absences,70%,"Shap
+ Value",0.09195724506253988
+activities,10%,"Shap
+ Value",0.03656044406548862
+activities,30%,"Shap
+ Value",0.036113369880456075
+activities,50%,"Shap
+ Value",0.03604721874250292
+activities,70%,"Shap
+ Value",0.03602401265353365
+age,10%,"Shap
+ Value",0.04695375300797207
+age,30%,"Shap
+ Value",0.046517069507381936
+age,50%,"Shap
+ Value",0.04621713233986067
+age,70%,"Shap
+ Value",0.04551439796126342
+famrel,10%,"Shap
+ Value",0.057547234002875494
+famrel,30%,"Shap
+ Value",0.06117497463831243
+famrel,50%,"Shap
+ Value",0.05618331244576097
+famrel,70%,"Shap
+ Value",0.05678311035232923
+famsup,10%,"Shap
+ Value",0.10060936983371056
+famsup,30%,"Shap
+ Value",0.09982160462299157
+famsup,50%,"Shap
+ Value",0.1011816180040739
+famsup,70%,"Shap
+ Value",0.10058769472888879
+freetime,10%,"Shap
+ Value",0.058000443788585036
+freetime,30%,"Shap
+ Value",0.05688548642120191
+freetime,50%,"Shap
+ Value",0.05751208993168799
+freetime,70%,"Shap
+ Value",0.057711542895318706
+goout,10%,"Shap
+ Value",0.09804302040985068
+goout,30%,"Shap
+ Value",0.08913595436238395
+goout,50%,"Shap
+ Value",0.09108382075679662
+goout,70%,"Shap
+ Value",0.09030294713057263
+guardian,10%,"Shap
+ Value",0.09069841895104061
+guardian,30%,"Shap
+ Value",0.0799560815967271
+guardian,50%,"Shap
+ Value",0.0795147621753394
+guardian,70%,"Shap
+ Value",0.07943859509214603
+health,10%,"Shap
+ Value",0.20041318510168027
+health,30%,"Shap
+ Value",0.19049724013913577
+health,50%,"Shap
+ Value",0.18918576761515243
+health,70%,"Shap
+ Value",0.1927522529386208
+higher,10%,"Shap
+ Value",0.32754668095210127
+higher,30%,"Shap
+ Value",0.26714191070967525
+higher,50%,"Shap
+ Value",0.2757126420839634
+higher,70%,"Shap
+ Value",0.2686566084897479
+internet,10%,"Shap
+ Value",0.14298915262423315
+internet,30%,"Shap
+ Value",0.15144204943465342
+internet,50%,"Shap
+ Value",0.14872399816209644
+internet,70%,"Shap
+ Value",0.1472642471967136
+nursery,10%,"Shap
+ Value",0.0530554570970299
+nursery,30%,"Shap
+ Value",0.051423062527267145
+nursery,50%,"Shap
+ Value",0.05154846400849704
+nursery,70%,"Shap
+ Value",0.053372457826419986
+paid,10%,"Shap
+ Value",0.198977342452202
+paid,30%,"Shap
+ Value",0.21543916538548416
+paid,50%,"Shap
+ Value",0.21596500263112908
+paid,70%,"Shap
+ Value",0.21858493972804682
+reason,10%,"Shap
+ Value",0.08509214378852223
+reason,30%,"Shap
+ Value",0.08771563323718232
+reason,50%,"Shap
+ Value",0.08805790012701645
+reason,70%,"Shap
+ Value",0.08841861817414105
+romantic,10%,"Shap
+ Value",0.12830495761236732
+romantic,30%,"Shap
+ Value",0.12837982287726232
+romantic,50%,"Shap
+ Value",0.12964970710408405
+romantic,70%,"Shap
+ Value",0.13095834950899246
+schoolsup,10%,"Shap
+ Value",0.28969430526780926
+schoolsup,30%,"Shap
+ Value",0.28295054688077415
+schoolsup,50%,"Shap
+ Value",0.2639170140096322
+schoolsup,70%,"Shap
+ Value",0.2556405739442113
+sex,10%,"Shap
+ Value",0.10371299786876012
+sex,30%,"Shap
+ Value",0.10387480607976474
+sex,50%,"Shap
+ Value",0.10402764462124024
+sex,70%,"Shap
+ Value",0.10416099067633969
+studytime,10%,"Shap
+ Value",0.13972852670905916
+studytime,30%,"Shap
+ Value",0.13811318178119839
+studytime,50%,"Shap
+ Value",0.15170732827354202
+studytime,70%,"Shap
+ Value",0.14902190842124385
+traveltime,10%,"Shap
+ Value",0.1166398002428538
+traveltime,30%,"Shap
+ Value",0.11534137317170616
+traveltime,50%,"Shap
+ Value",0.11125319365805404
+traveltime,70%,"Shap
+ Value",0.10988289862975238

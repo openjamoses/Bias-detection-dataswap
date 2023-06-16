@@ -1,0 +1,74 @@
+Feature,"Test 
+ Percentage",Metric,Value
+age,10%,"Shap
+ Value",0.014995052281457488
+age,30%,"Shap
+ Value",0.01449312433671254
+age,50%,"Shap
+ Value",0.01466961563932658
+age,70%,"Shap
+ Value",0.014631309636653033
+balance,10%,"Shap
+ Value",0.04394321503716516
+balance,30%,"Shap
+ Value",0.04116230978462427
+balance,50%,"Shap
+ Value",0.04108244650435588
+balance,70%,"Shap
+ Value",0.04068692961931683
+campaign,10%,"Shap
+ Value",0.16645869213044737
+campaign,30%,"Shap
+ Value",0.1629673677055267
+campaign,50%,"Shap
+ Value",0.16449020314179516
+campaign,70%,"Shap
+ Value",0.1644448701982734
+default,10%,"Shap
+ Value",0.00988857568412143
+default,30%,"Shap
+ Value",0.00890282037985965
+default,50%,"Shap
+ Value",0.01011582100474691
+default,70%,"Shap
+ Value",0.00907848456553609
+duration,10%,"Shap
+ Value",1.0447296921412976
+duration,30%,"Shap
+ Value",1.0213204215083338
+duration,50%,"Shap
+ Value",1.0315667392239884
+duration,70%,"Shap
+ Value",1.025648255823236
+education,10%,"Shap
+ Value",0.1639973606187175
+education,30%,"Shap
+ Value",0.16270534471724976
+education,50%,"Shap
+ Value",0.1628516180739444
+education,70%,"Shap
+ Value",0.16345824962450337
+housing,10%,"Shap
+ Value",0.537198999836303
+housing,30%,"Shap
+ Value",0.5361128727010854
+housing,50%,"Shap
+ Value",0.5376981034889396
+housing,70%,"Shap
+ Value",0.5378185234275684
+job,10%,"Shap
+ Value",0.05370959517562732
+job,30%,"Shap
+ Value",0.05275386328611415
+job,50%,"Shap
+ Value",0.05309288820722373
+job,70%,"Shap
+ Value",0.052459112002922303
+loan,10%,"Shap
+ Value",0.15291139216144525
+loan,30%,"Shap
+ Value",0.16083171266436247
+loan,50%,"Shap
+ Value",0.15983567044589067
+loan,70%,"Shap
+ Value",0.15993751394331604

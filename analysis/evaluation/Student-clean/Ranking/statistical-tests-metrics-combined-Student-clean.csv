@@ -1,0 +1,7 @@
+Baseline,Cases,Win-P,Tied-P,Loss-P,,Win-F,Tied-F,Loss-F
+DIR,None,0,23,0,,0,23,0
+DIR,['Medu'],0,22,0,,0,10,12
+DIR,['health'],0,22,0,,0,16,6
+DIR,['activities'],0,22,0,,0,22,0
+DIR,['absences'],0,22,0,,0,18,4
+DIR,['sex'],0,22,0,,0,18,4

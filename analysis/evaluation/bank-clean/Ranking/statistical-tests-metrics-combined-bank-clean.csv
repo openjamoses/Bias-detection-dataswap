@@ -1,0 +1,10 @@
+Baseline,Cases,Win-P,Tied-P,Loss-P,,Win-F,Tied-F,Loss-F
+DIR,None,0,9,0,,0,9,0
+DIR,['housing'],0,8,0,,0,8,0
+DIR,['loan'],0,8,0,,0,8,0
+DIR,['education'],0,8,0,,0,8,0
+DIR,['balance'],0,8,0,,0,8,0
+DIR,['duration'],0,8,0,,0,4,4
+DIR,['default'],0,8,0,,0,8,0
+DIR,"['loan', 'duration']",0,6,1,,0,4,3
+DIR,['age'],0,8,0,,0,8,0
