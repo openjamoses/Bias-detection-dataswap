@@ -15,9 +15,11 @@ from sklearn.metrics import accuracy_score, confusion_matrix
 from tensorflow.python.keras.utils.np_utils import to_categorical
 from src.common.distance_measure import DistanceMeasure_specific
 from src.common.models import Models, Models2
-from revision.framework.common.load_data import LoadData
-from revision.framework.common.sensitivity_utils import *
-from revision.framework.common.utility_functions import *
+from src.common.load_data import LoadData
+from src.common.sensitivity_utils import *
+from src.common.utility_functions import *
+from src.detection.swapping import Swapping
+
 
 class Sensitive:
     def __init__(self, df_data, data, target_index, data_name, colums_list, log_path, threshold=1):
