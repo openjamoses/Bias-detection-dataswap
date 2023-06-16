@@ -1,0 +1,211 @@
+from scipy import stats
+from sklearn.metrics import accuracy_score, confusion_matrix
+from src.common.metrics_utils import FairnessMetrics_binary
+from src.common.utility_functions import *
+import pandas as pd
+import numpy as np
+from copy import deepcopy
+class LRTD:
+    def __init__(self, train, test, colums_list, target_index, acc_, dict_fairness_metrics):
+        self.target_index = target_index
+        self.acc = acc_
+        self.train, self.test = train, test
+        self.colums_list = colums_list
+        self.dict_fairness_metrics = dict_fairness_metrics
+
+        #print('before: ', self.test.shape, type(self.test))
+        train_transformed = self.data_binning(self.train, 0)
+        test_transformed = self.data_binning(self.test, 0)
+        #train_transformed.reshape((self.train.shape))
+        #test_transformed.reshape((self.test.shape))
+        #print('after: ', test_transformed.shape, type(test_transformed))
+        for column_id in range(1, self.train.shape[1]):
+            train_transformed = self.data_binning(train_transformed, column_id)
+            test_transformed = self.data_binning(test_transformed, column_id)
+        self.train_transformed = train_transformed
+        self.test_transformed = test_transformed
+        self.x_train, self.y_train = split_features_target(train_transformed, self.target_index)
+        self.x_test, self.y_test = split_features_target(test_transformed, self.target_index)
+        #self.data_writer_baseline = data_writer_baseline
+
+        y_list = [y for y in self.y_train]
+        for y in self.y_test:
+            y_list.append(y)
+        unique = np.unique(y_list)
+        self.fav = unique[1] if unique[0] < unique[1] else unique[0]
+        self.non_fav = unique[1] if unique[0] > unique[1] else unique[0]
+
+    def data_binning(self, data, feature_index):
+        # data_range = self.data[0:, feature_index]
+        #print(type, data.shape)
+        n, m = data.shape
+        x_transform = np.zeros(shape=(n,m))
+        data_range = data[0:, feature_index]
+        folded_data = {}
+        unique_ = np.unique(data_range)
+        if len(unique_) == 2:
+            folded_data[0.0] = [np.unique(data_range)[0] if np.unique(data_range)[0] < np.unique(data_range)[1] else
+                                np.unique(data_range)[1]]
+            folded_data[1.0] = [np.unique(data_range)[0] if np.unique(data_range)[0] > np.unique(data_range)[1] else \
+                                    np.unique(data_range)[1]]
+            x_transform = data
+        elif len(unique_) > 2 and len(unique_) <= 6:
+            medium = np.median(unique_)
+            folded_data[0.0] = [0.0 for v in unique_ if v <= medium]
+            folded_data[1.0] = [1.0 for v in unique_ if v > medium]
+            for i in range(len(data_range)):
+                x_transform[i,:] = data[i,:]
+                if data[i,feature_index] <= medium:
+                    x_transform[i, feature_index] = 0.0
+                else:
+                    x_transform[i, feature_index] = 1.0
+        else:
+            # print(data_range)
+            # percentile_50_ = (min(data_range) + max(data_range))/2 #np.percentile(list(set(data_range)), 50)
+            percentile_50_ = np.percentile(unique_, 50)
+            # percentile_50_ = np.mean(data_range)
+            percentile_75 = np.percentile(data_range, 75)
+            percentile_50 = max([i for i in unique_ if i <= percentile_50_])
+            percentile_100 = np.percentile(data_range, 100)
+            # print('percentile_50: ', percentile_50, percentile_100, np.unique(data_range), data_range)
+            if percentile_50 == np.min(data_range) or percentile_50 == np.max(data_range):
+                # percentile_25 = np.percentile(np.unique(data_range), 25)
+                percentile_50 = np.percentile(np.unique(data_range), 50)
+                # percentile_75 = np.percentile(np.unique(data_range), 75)
+            # if percentile_50 == percentile_25:
+            #    percentile_50 = np.max(data_range)/2
+            # if percentile_25 == np.min(data_range):
+            #    percentile_25 = percentile_50/2
+            for i in range(len(data_range)):
+                fold_id = percentile_50
+                x_transform[i, :] = data[i, :]
+                if data_range[i] <= percentile_50:
+                    fold_id = 0.0
+                else:  # and data_range[i] <= percentile_50:
+                    fold_id = 1.0
+                x_transform[i, feature_index] = fold_id
+        return x_transform
+    def fit_baseline(self, clf, p_pred, fold, droped_attrib, data_writer_baseline):
+
+        clf_base = deepcopy(clf)
+        data_test_fm_ = {}
+        data_train_fm_ = {}
+        # train_transformed = self.data_binning(self.train, 0)
+        # test_transformed = self.data_binning(self.test, 0)
+        for column_id in range(self.train.shape[1]):
+            # train_transformed = self.data_binning(train_transformed, column_id)
+            # test_transformed = self.data_binning(test_transformed, column_id)
+            data_train_fm_[self.colums_list[column_id]] = self.train_transformed[0:, column_id]
+            data_test_fm_[self.colums_list[column_id]] = self.test_transformed[0:, column_id]
+        data_train_fm = pd.DataFrame(data_train_fm_)
+        data_test_fm = pd.DataFrame(data_test_fm_)
+
+        x_train_copy_, y_train_copy_ = data_train_fm.loc[:,
+                                       data_train_fm.columns != self.colums_list[self.target_index]], data_train_fm[
+                                           self.colums_list[self.target_index]]
+        x_test_copy_, y_test_copy_ = data_test_fm.loc[:, data_test_fm.columns != self.colums_list[self.target_index]], \
+                                     data_test_fm[self.colums_list[self.target_index]]
+
+        x_train_copy, y_train_copy = data_train_fm.loc[:, data_train_fm.columns != self.colums_list[self.target_index]], \
+                                     data_train_fm[self.colums_list[self.target_index]]
+        x_test_copy, y_test_copy = data_test_fm.loc[:, data_test_fm.columns != self.colums_list[self.target_index]], \
+                                   data_test_fm[self.colums_list[self.target_index]]
+
+        for column_id in range(self.x_train.shape[1]):
+
+            # cd = self.determine_range(column_id)
+            # print('size:', len(cd.keys()), 'category_data: ', cd)
+            data_ = self.x_test[0:, column_id]
+            # data_ = self.y_test
+            # print('data before: ', np.unique(self.x_test[0:, column_id]), np.unique(data_))
+            c = np.unique(data_)
+
+            # print(c, len(c))
+            # if len(c) == 2:
+            TPR_difference, FPR_difference, SPD, DIR, AOD, TPR, FPR, SP, Precision, Recal, F1, ACC = self.dict_fairness_metrics[column_id]
+
+            if len(c) == 2:
+                c0 = np.sum(data_ == c[0])
+                c1 = np.sum(data_ == c[1])
+                protected_ = c[0]
+                non_protected_ = c[1]
+                if c1 > c0:
+                    protected_ = c[1]
+                    non_protected_ = c[0]
+
+                x_train_copy[self.colums_list[column_id]] = x_train_copy_[self.colums_list[column_id]]
+                x_test_copy[self.colums_list[column_id]] = x_test_copy_[self.colums_list[column_id]]
+
+                ## TODO: LTDD Model goes here
+                column_data = x_test_copy[self.colums_list[column_id]]
+
+                slope_store = []
+                intercept_store = []
+                rvalue_store = []
+                pvalue_store = []
+                column_u = []
+                flag = 0
+                ce = []
+                times = 0
+
+                def Linear_regression(x, slope, intercept):
+                    return x * slope + intercept
+
+                for column_id2 in range(self.x_train.shape[1]):
+                    if self.colums_list[column_id] != self.colums_list[column_id2]:
+                        if not self.colums_list[column_id2] in list(x_train_copy.columns):
+                            x_train_copy[self.colums_list[column_id2]] = x_train_copy_[self.colums_list[column_id2]]
+                            x_test_copy[self.colums_list[column_id2]] = x_test_copy_[self.colums_list[column_id2]]
+                        data2_ = self.x_test[0:, column_id]
+                        c2 = np.unique(data2_)
+                        # print(c, len(c))
+                        # if len(c) == 2:
+                        if len(c) > 1:
+                            c20 = np.sum(data2_ == c[0])
+                            c21 = np.sum(data2_ == c[1])
+                            protected2_ = c2[0]
+                            non_protected2_ = c2[1]
+                            if c21 > c20:
+                                protected2_ = c2[1]
+                                non_protected2_ = c2[0]
+                            # print('x_train_copy: ', colums_list[column_id], colums_list[column_id2], x_train_copy.columns,  x_train_copy)
+                            slope, intercept, rvalue, pvalue, stderr = stats.linregress(
+                                x_train_copy[self.colums_list[column_id]],
+                                x_train_copy[self.colums_list[column_id2]])
+                            rvalue_store.append(rvalue)
+                            pvalue_store.append(pvalue)
+                            if pvalue < 0.05:
+                                times = times + 1
+                                column_u.append(self.colums_list[column_id2])
+                                ce.append(flag)
+                                slope_store.append(slope)
+                                intercept_store.append(intercept)
+                                x_train_copy[self.colums_list[column_id2]] = x_train_copy[self.colums_list[
+                                    column_id2]] - Linear_regression(x_train_copy[self.colums_list[column_id]], slope,
+                                                                     intercept)
+                                # self.x_test_copy[0:, column_id2] = self.x_test_copy[0:, column_id2] - Linear_regression(
+                                #    self.x_test[0:, column_id], slope, intercept)
+                x_train_copy = x_train_copy.drop([self.colums_list[column_id]], axis=1)
+
+                for i_index in range(len(column_u)):
+                    x_test_copy[column_u[i_index]] = x_test_copy[column_u[i_index]] - Linear_regression(
+                        x_test_copy[self.colums_list[column_id2]], slope_store[i_index],
+                        intercept_store[i_index])
+
+                x_test_copy = x_test_copy.drop([self.colums_list[column_id]], axis=1)
+
+                #print(type(x_test_copy), x_test_copy)
+                clf_base.fit(x_train_copy, y_train_copy)
+                y_pred = clf_base.predict(x_test_copy)
+                # I obtain the accuracy of this fold
+
+                fairnessMetrics_binary = FairnessMetrics_binary(column_data,protected_key=protected_,non_protected_key=non_protected_,fav=self.fav,
+                                                                non_fav=self.non_fav)
+                TPR_diff_after, FPR_diff_after, SPD_after, DIR_after, AOD_after, TPR_after, FPR_after, SP_after, Precision_after, Recal_after, F1_after, ACC_after = fairnessMetrics_binary.fairness_metrics(y_test_copy_, y_pred)
+                acc_after = accuracy_score(y_pred, y_test_copy)
+
+                data_writer_baseline.writerow(
+                    [fold, self.colums_list[column_id], droped_attrib, self.acc, acc_after, TPR_difference, TPR_diff_after, FPR_difference, FPR_diff_after,
+                     SPD, SPD_after, DIR,
+                     DIR_after, AOD, AOD_after, TPR, TPR_after, FPR, FPR_after, SP, SP_after, Precision,
+                     Precision_after, Recal, Recal_after, F1, F1_after, ACC, ACC_after])

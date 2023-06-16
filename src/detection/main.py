@@ -346,9 +346,10 @@ class Sensitive:
 if __name__ == '__main__':
     path = '../../raw-data/'
 
-    path_output = '../framework/dataset-original/'
 
-    ## TODO: Splease specify the hyperparams here
+    path_output = '../dataset-original/'
+
+    ## TODO: Please specify the hyperparams here
     fair_error = 0.01 # Optional
     alpha = 0.3 # distortion
     correlation_threshold = 0.45  # remove correlated features
@@ -360,23 +361,23 @@ if __name__ == '__main__':
     #data_name, ordering = 'bank',  {}#
     #data_name, ordering = 'compas', {0:['race', 'sex', 'age']}
 
-    # df_adult = loadData.load_adult_data('adult.data.csv')
-    # df_adult = loadData.load_credit_defaulter('default_of_credit_card_clients.csv')
-    df_adult = loadData.load_clevelan_heart_data('processed.cleveland.data.csv')
-    # df_adult = loadData.load_student_data('Student.csv') #, drop_feature=['Pstatus', 'nursery']
-    # df_adult = loadData.load_german_data2('german_credit_data.csv')
-    # df_adult = loadData.load_german_data('GermanData.csv')
-    # df_adult = loadData.load_compas_data('compas-scores-two-years.csv')
-    # df_adult = loadData.load_bank_data('bank.csv')
+    # df_data = loadData.load_adult_data('adult.data.csv')
+    # df_data = loadData.load_credit_defaulter('default_of_credit_card_clients.csv')
+    df_data = loadData.load_clevelan_heart_data('processed.cleveland.data.csv')
+    # df_data = loadData.load_student_data('Student.csv') #, drop_feature=['Pstatus', 'nursery']
+    # df_data = loadData.load_german_data2('german_credit_data.csv')
+    # df_data = loadData.load_german_data('GermanData.csv')
+    # df_data = loadData.load_compas_data('compas-scores-two-years.csv')
+    # df_data = loadData.load_bank_data('bank.csv')
     sensitive_list = loadData.sensitive_list
     sensitive_indices = loadData.sensitive_indices
-    colums_list = df_adult.columns.tolist()
+    colums_list = df_data.columns.tolist()
 
     target_name = loadData.target_name
     target_index = loadData.target_index
 
-    print(target_name, colums_list, df_adult)
+    print(target_name, colums_list, df_data)
     for colum in colums_list:
-        print(set(df_adult[target_name].values.tolist()))
-    sensitivity = Sensitive(df_adult, df_adult.to_numpy(),target_index,data_name,colums_list,path_output, alpha)
+        print(set(df_data[target_name].values.tolist()))
+    sensitivity = Sensitive(df_data, df_data.to_numpy(),target_index,data_name,colums_list,path_output, alpha)
     sensitivity.fit(ordering=ordering, dmax=alpha)
