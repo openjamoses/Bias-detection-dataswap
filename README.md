@@ -10,3 +10,20 @@ We propose an approach for systematically identifying all bias-inducing features
 - The important features to the model: Given these identified bias inducing features, we wanted to assert whether or not they are important to the model. We used SHAP Values (an acronym from Shapley Additive exPlanations), a model explainable method to explain the individual prediction based on game theoretically optimal Shapley values.
 
 We evaluated this technique using four well-known datasets to showcase how our contribution can help spearhead the standard procedure when developing, testing, maintaining, and deploying fair/equitable machine learning systems.
+
+
+
+
+#### Table of Contents  
+
+ [Detection](#Detection)  
+> We describe the detection steps of bias
+
+ [Source](#Source)  
+> With this repository is included a complete working source code to reproduce the whole results reported in this Study i.e., src.
+A simple configuration may be required before running the code.
+
+In the following, you will find a brief descriptions of what is contained in the source code and how to get started.
+
+ [Datasets](#Datasets)  
+> All dataset used for this study can be found in the folder analysis. The sub-directories are organised based on the name of the dataset we considered in this analysis and are self-explainatory.
