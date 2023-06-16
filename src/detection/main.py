@@ -8,17 +8,13 @@ import shap
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeRegressor
 import random
-from revision.framework.common.metrics_utils import FairnessMetrics_partioning
-from revision.framework.common.partial_ordering import Partial_ordering, VALID_TYPE_FREQUENT, VALID_TYPE_DEFINED
-from revision.test.baseline_fairsmote import BaselineFairSMOTE
-from revision.test.basement_LRTD import BaselineLRTD
-from revision.test.swapping2 import Swapping
-from src.models.v4.distance_measure import DistanceMeasure
+from src.common.metrics_utils import FairnessMetrics_partioning
+from src.common.partial_ordering import Partial_ordering, VALID_TYPE_FREQUENT, VALID_TYPE_DEFINED
 from sklearn import model_selection
 from sklearn.metrics import accuracy_score, confusion_matrix
 from tensorflow.python.keras.utils.np_utils import to_categorical
-from revision.framework.common.distance_measure import DistanceMeasure2
-from revision.framework.common.models import Models, Models2
+from src.common.distance_measure import DistanceMeasure_specific
+from src.common.models import Models, Models2
 from revision.framework.common.load_data import LoadData
 from revision.framework.common.sensitivity_utils import *
 from revision.framework.common.utility_functions import *
@@ -220,10 +216,10 @@ class Sensitive:
 
                     print(column_id, Precision_after, Recal_after, F1_after, ACC_after)
 
-                    kl_mean, js_mean = DistanceMeasure2.js_divergence(p_pred, q_pred)
-                    hellinger_mean = DistanceMeasure2.hellinger_continous_1d(p_pred, q_pred)
-                    wasserstein_mean = DistanceMeasure2.wasserstein_distance(p_pred, q_pred)
-                    total_variation_mean = DistanceMeasure2.total_variation_distance(p_pred, q_pred)
+                    kl_mean, js_mean = DistanceMeasure_specific.js_divergence(p_pred, q_pred)
+                    hellinger_mean = DistanceMeasure_specific.hellinger_continous_1d(p_pred, q_pred)
+                    wasserstein_mean = DistanceMeasure_specific.wasserstein_distance(p_pred, q_pred)
+                    total_variation_mean = DistanceMeasure_specific.total_variation_distance(p_pred, q_pred)
                     acc_after = accuracy_score(q_pred, self.y_test)
 
                     f_importance = round(np.sum(self.y_test != q_pred)*100/len(self.y_test), 3)
@@ -262,10 +258,10 @@ class Sensitive:
                                     TPR_diff_after, FPR_diff_after, SPD_after, DIR_after, AOD_after, TPR_after, FPR_after, SP_after, Precision_after, Recal_after, F1_after, ACC_after = fairnessMetrics_partioning.fairness_metrics(
                                         q_pred, q_pred_both)
 
-                                    kl_mean, js_mean = DistanceMeasure2.js_divergence(q_pred, q_pred_both)
-                                    hellinger_mean = DistanceMeasure2.hellinger_continous_1d(q_pred, q_pred_both)
-                                    wasserstein_mean = DistanceMeasure2.wasserstein_distance(q_pred, q_pred_both)
-                                    total_variation_mean = DistanceMeasure2.total_variation_distance(q_pred, q_pred_both)
+                                    kl_mean, js_mean = DistanceMeasure_specific.js_divergence(q_pred, q_pred_both)
+                                    hellinger_mean = DistanceMeasure_specific.hellinger_continous_1d(q_pred, q_pred_both)
+                                    wasserstein_mean = DistanceMeasure_specific.wasserstein_distance(q_pred, q_pred_both)
+                                    total_variation_mean = DistanceMeasure_specific.total_variation_distance(q_pred, q_pred_both)
                                     acc_after = accuracy_score(q_pred, q_pred_both)
 
                                     f_importance = round(np.sum(q_pred_both != q_pred) * 100 / len(self.y_test), 3)
@@ -299,10 +295,10 @@ class Sensitive:
                                     TPR_diff_after, FPR_diff_after, SPD_after, DIR_after, AOD_after, TPR_after, FPR_after, SP_after, Precision_after, Recal_after, F1_after, ACC_after = fairnessMetrics_partioning.fairness_metrics(
                                         q_pred, q_pred_both)
 
-                                    kl_mean, js_mean = DistanceMeasure2.js_divergence(q_pred, q_pred_both)
-                                    hellinger_mean = DistanceMeasure2.hellinger_continous_1d(q_pred, q_pred_both)
-                                    wasserstein_mean = DistanceMeasure2.wasserstein_distance(q_pred, q_pred_both)
-                                    total_variation_mean = DistanceMeasure2.total_variation_distance(q_pred, q_pred_both)
+                                    kl_mean, js_mean = DistanceMeasure_specific.js_divergence(q_pred, q_pred_both)
+                                    hellinger_mean = DistanceMeasure_specific.hellinger_continous_1d(q_pred, q_pred_both)
+                                    wasserstein_mean = DistanceMeasure_specific.wasserstein_distance(q_pred, q_pred_both)
+                                    total_variation_mean = DistanceMeasure_specific.total_variation_distance(q_pred, q_pred_both)
                                     acc_after = accuracy_score(q_pred, q_pred_both)
 
                                     f_importance = round(np.sum(q_pred_both != q_pred) * 100 / len(self.y_test), 3)
