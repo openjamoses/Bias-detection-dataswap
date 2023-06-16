@@ -52,7 +52,9 @@ class Swapping:
                         X_new[i, column_id] = X[i, column_id]
         return X_new
 
-    # TODO: under implementation, please don't use yet!
+    # TODO: basic idea is same with the prevous function, only that expect that the first variable already swapped using the previus function!
+    # TODO: the close result could be determined if we simply call the function data_swapping, twice!
+    # TODO: howver, the difference comes in when we trying to compute the distortion between the swapped candidate!
     def double_swapping(self, X1, X, column_id, column_id2, I, choice_dict, dmax=0.2):
         n, m = X.shape
         X_new = np.zeros(shape=(n, m))
