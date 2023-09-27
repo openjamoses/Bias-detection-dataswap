@@ -6,17 +6,17 @@ import os
 
 # todo: group by tutorials: https://stackoverflow.com/questions/17679089/pandas-dataframe-groupby-two-columns-and-get-counts
 alpha = 0.3
-path = '../dataset-original/'
+path = '../../dataset-default/'
 # if __name__ == '__main__':
 # df = pd.read_csv(path+'logging/log_KL_Divergence_overral_adult-45.csv')
 
-# data_name = 'clevelan_heart'
+data_name = 'clevelan_heart'
 # data_name = 'compas'
 # data_name = 'Student-{}_'.format(alpha)  # _35_threshold
 # data_name = 'german_credit'  # _35_threshold
-data_name = 'bank-new'
+#data_name = 'bank'
 #data_name = 'Student'
-path_output = '/Volumes/Cisco/Summer2023/Fairness/Revision/experiments2/{}/'.format(data_name)
+path_output = '/Volumes/Cisco/Winter2023/Fairness/Revision2/experiments2/{}/'.format(data_name)
 
 swap_proportion_selected = 0.5
 # data_name_str = '{}-{}_'.format(data_name, alpha)

@@ -347,27 +347,27 @@ if __name__ == '__main__':
     path = '../../raw-data/'
 
 
-    path_output = '../dataset-original/'
+    path_output = '../../dataset-default/'
 
     ## TODO: Please specify the hyperparams here
     fair_error = 0.01 # Optional
     alpha = 0.3 # distortion
-    correlation_threshold = 0.45  # remove correlated features
+    correlation_threshold = None #0.45  # remove correlated features
     loadData = LoadData(path, threshold=correlation_threshold)
     #TODO; Uncomment the line before, for the dataset you want to analyse
     ## Its always optional to provide the partial ordering, either part full or part. Leave the dictionary empy otherwise
     #data_name, ordering = 'Student', {0:['sex','age']}
-    data_name, ordering = 'clevelan_heart', {0:['sex']} # , 'age'
-    #data_name, ordering = 'bank',  {}#
-    #data_name, ordering = 'compas', {0:['race', 'sex', 'age']}
+    #data_name, ordering = 'clevelan_heart', {0:['sex']} # , 'age'
+    # data_name, ordering = 'bank',  {}#
+    data_name, ordering = 'compas', {0:['race', 'sex', 'age']}
 
     # df_data = loadData.load_adult_data('adult.data.csv')
     # df_data = loadData.load_credit_defaulter('default_of_credit_card_clients.csv')
-    df_data = loadData.load_clevelan_heart_data('processed.cleveland.data.csv')
+    #df_data = loadData.load_clevelan_heart_data('processed.cleveland.data.csv')
     # df_data = loadData.load_student_data('Student.csv') #, drop_feature=['Pstatus', 'nursery']
     # df_data = loadData.load_german_data2('german_credit_data.csv')
     # df_data = loadData.load_german_data('GermanData.csv')
-    # df_data = loadData.load_compas_data('compas-scores-two-years.csv')
+    df_data = loadData.load_compas_data('compas-scores-two-years.csv')
     # df_data = loadData.load_bank_data('bank.csv')
     sensitive_list = loadData.sensitive_list
     sensitive_indices = loadData.sensitive_indices

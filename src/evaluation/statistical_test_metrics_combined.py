@@ -90,7 +90,7 @@ def generate_ranking(data_before, data_after, PERFORMANCE):
                     Rank_dict[key][key2][rank_val] = 1
     return Rank_dict
 # todo: group by tutorials: https://stackoverflow.com/questions/17679089/pandas-dataframe-groupby-two-columns-and-get-counts
-path_original = '../dataset-original/'
+path_original = '../../dataset-original/'
 # path_filtered = '../dataset-filtered/'
 # if __name__ == '__main__':
 # df = pd.read_csv(path+'logging/log_KL_Divergence_overral_adult-45.csv')
@@ -100,16 +100,16 @@ path_original = '../dataset-original/'
 #data_name = 'Student-new2'
 #data_name = 'Student-new'
 #data_name = 'clevelan_heart-clean'
-data_name = 'bank-clean'
-#data_name = 'compas-clean'
+#data_name = 'bank-clean'
+data_name = 'compas-clean'
 #data_name = 'Student-clean'
 # data_name = 'compas'
 alpha = 0.3
 naming = data_name  # '{}-{}_'.format(data_name, alpha)  # _35_threshold
-path_output_ = '/Volumes/Cisco/Summer2023/Fairness/Revision/experiments2/{}/'.format(data_name)
+path_output_ = '/Volumes/Cisco/Summer2023/Fairness/Revision/experiments3/{}/'.format(data_name)
 #df_lrtd = pd.read_csv(path_original + naming + '/' + str(alpha) + '/' + 'Baseline_LRTD_{}.csv'.format(naming))
 BASELINES = ['LRTD', 'fairSMOTE', 'Reweighing', 'DIR']
-path_output_ = '/Volumes/Cisco/Summer2023/Fairness/Revision/experiments2/{}/'.format(data_name)
+path_output_ = '/Volumes/Cisco/Summer2023/Fairness/Revision/experiments3/{}/'.format(data_name)
 # path_output2 = '/Volumes/Cisco/Fall2022/Fairness/Analysis/Ranking/Shap/'
 if not os.path.exists(path_output_):
     os.makedirs(path_output_)
